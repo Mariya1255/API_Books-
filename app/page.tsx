@@ -6,7 +6,7 @@ export default function BooksPage() {
   const [response, setResponse] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  const fetchData = async (method: string, body?: any) => {
+  const fetchData = async (method: string, body?: unknown) => {
     setError(null);
     setResponse(null);
 

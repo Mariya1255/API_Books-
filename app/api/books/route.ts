@@ -1,6 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(request: NextRequest) {
+   console.log("GET request URL:", request.url);
+
   return NextResponse.json({
     message: "GET request successful",
     data: [
@@ -11,6 +13,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  console.log("POST request received:", request.method); 
   const body = await request.json();
   const { name, age } = body;
 
@@ -20,6 +23,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function PUT(request: NextRequest) {
+  console.log("PUT request received at:", request.url); 
   const body = await request.json();
   const { id, name, age } = body;
 
@@ -29,6 +33,7 @@ export async function PUT(request: NextRequest) {
 }
 
 export async function DELETE(request: NextRequest) {
+  console.log("DELETE request received:", request.url); 
   const body = await request.json();
   const { id } = body;
 
