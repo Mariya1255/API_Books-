@@ -21,8 +21,8 @@ export default function BooksPage() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Request failed");
       setResponse(JSON.stringify(data, null, 2)); // Beautify JSON response
-    } catch (err: any) {
-      setError(err.message);
+    } catch (err: unknown) {
+      setError('err.message');
     }
   };
 
