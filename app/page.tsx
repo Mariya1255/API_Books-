@@ -18,11 +18,19 @@ export default function BooksPage() {
       }
 
       const res = await fetch("/api/books", options);
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Request failed");
-      setResponse(JSON.stringify(data, null, 2)); // Beautify JSON response
+      const data: unknown = await res.json();
+
+      if (!res.ok) {
+        // If API fails, throw an error
+        throw new Error((data as { message?: string })?.message || "Request failed");
+      }
+
+      // Beautify and set the response
+      setResponse(JSON.stringify(data, null, 2));
     } catch (err: unknown) {
-      setError('err.message');
+      // Handle unknown error
+      const errorMessage = (err as { message?: string })?.message || "An unknown error occurred";
+      setError(errorMessage);
     }
   };
 
@@ -31,24 +39,31 @@ export default function BooksPage() {
       <h1 className="text-2xl font-bold mb-4">Books API UI</h1>
 
       <div className="flex space-x-2 mb-4">
+        {/* GET Button */}
         <button
           onClick={() => fetchData("GET")}
           className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
         >
           GET Data
         </button>
+
+        {/* POST Button */}
         <button
           onClick={() => fetchData("POST", { name: "John Doe", age: 30 })}
           className="bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
         >
           POST Data
         </button>
+
+        {/* PUT Button */}
         <button
           onClick={() => fetchData("PUT", { id: 1, name: "Jane Doe", age: 25 })}
           className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600"
         >
           PUT Data
         </button>
+
+        {/* DELETE Button */}
         <button
           onClick={() => fetchData("DELETE", { id: 1 })}
           className="bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
